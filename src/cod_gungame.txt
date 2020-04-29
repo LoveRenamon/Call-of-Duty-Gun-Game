@@ -1,7 +1,0 @@
-"cod_gungame" 
-{
-	"base" "base"
-	"title" "Call of Duty - Gun Game"
-	"maps" ""
-	"menusystem" "1"
-}

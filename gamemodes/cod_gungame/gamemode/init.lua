@@ -19,11 +19,11 @@ include("game_handler/sv_game_handler.lua")
 include("pregame_screen/sv_pregame.lua")
 
 -- Initial spawn
-function GM:PlayerInitialSpawn( player ) 
+function GM:PlayerInitialSpawn( player )
 
 	-- Set a model for the player
-	if(util.IsValidModel(table.Random( GG_SKINS_LIST ))) then
-		player:SetModel( table.Random( GG_SKINS_LIST ) )
+	if(util.IsValidModel(table.Random( GG_PLAYERMODEL_LIST ))) then
+		player:SetModel( table.Random( GG_PLAYERMODEL_LIST ) )
 	else
 		player:SetModel( table.Random( GG_BACKUP_SKINS_LIST ) )
 	end
@@ -32,6 +32,12 @@ function GM:PlayerInitialSpawn( player )
 	checkScore( player )
 
 end
+
+-- add a spawn hook and prevent errors
+local function spawn(player)
+	player:
+end
+hook.Add( "PlayerInitialSpawn", "spawn_fix", spawn )
 
 -- Player Spawn event
 function GM:PlayerSpawn( player )
@@ -43,8 +49,8 @@ function GM:PlayerSpawn( player )
 	end
 
 	-- Set a model for the player
-	if(util.IsValidModel(table.Random( GG_SKINS_LIST ))) then
-		player:SetModel( table.Random( GG_SKINS_LIST ) )
+	if(util.IsValidModel(table.Random( GG_PLAYERMODEL_LIST ))) then
+		player:SetModel( table.Random( GG_PLAYERMODEL_LIST ) )
 	else
 		player:SetModel( table.Random( GG_BACKUP_SKINS_LIST ) )
 	end
@@ -94,7 +100,7 @@ function GM:PlayerDeath( victim, weapon, attacker )
 		if(weapon:GetClass() != "player") then
 			used_weapon = weapon:GetClass()
 		else -- if attacker's weapon is not nil
-			if(attacker:GetActiveWeapon():GetClass() != nil) then 
+			if(attacker:GetActiveWeapon():GetClass() != nil) then
 
 				-- if the current weapon doesn't equal the one from the weapons list
 				if(getCurrentWeapon(GetKills(attacker) + 1) != nil and attacker:GetActiveWeapon():GetClass() != getCurrentWeapon(GetKills(attacker) + 1)) then
@@ -107,16 +113,16 @@ function GM:PlayerDeath( victim, weapon, attacker )
 		-- if melee attack
 		if(used_weapon == GG_KNIFE || used_weapon == GG_KNIFE_THROW || used_weapon == GG_BACKUP_KNIFE || used_weapon == GG_BACKUP_KNIFE_THROW) then
 		   	RemoveKill(attacker, victim, 1)
-		else 
+		else
 			AddKill(attacker, victim, -1)
 		end
 	end
-	
+
 	-- If the player has less than 20 kills
 	if (IsValid(attacker)) then
 		if(attacker:IsPlayer() and GetKills(attacker) < 20) then
-			if(victim != attacker and attacker:Alive()) then 
-				attacker:RemoveAllItems() 
+			if(victim != attacker and attacker:Alive()) then
+				attacker:RemoveAllItems()
 			end
 
 			GiveLoadout(attacker, GetKills(attacker) + 1)
@@ -127,7 +133,7 @@ end
 
 -- Player disconnects
 function GM:PlayerDisconnected( ply )
-	
+
 	local gameStatus = GetGlobalInt( "GG_GAME_STATUS" )
 
 	-- If the game started or is counting down, delete data
@@ -141,7 +147,7 @@ function GM:PlayerDisconnected( ply )
 end
 
 -- Give player first weapon
-function GiveLoadout(player, count) 
+function GiveLoadout(player, count)
 
 	local wp
 
@@ -149,14 +155,14 @@ function GiveLoadout(player, count)
 		wp = GG_WEAPONS_LIST[20 - (count - 1)].weapon
 
 		if(weapons.GetStored( wp ) == nil) then
-			print("[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
+			MsgC( Color( 255, 10, 10 ), "[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
 			wp = GG_BACKUP_WEAPONS_LIST[20 - (count - 1)].weapon
 		end
 	else
 		wp = GG_WEAPONS_LIST[count].weapon
 
-		if(weapons.GetStored( wp ) == nil and GG_USE_M9K) then
-			print("[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
+		if(weapons.GetStored( wp ) == nil and GG_USE_TFA) then
+			MsgC( Color( 255, 10, 10 ), "[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
 			wp = GG_BACKUP_WEAPONS_LIST[count].weapon
 		end
 	end
@@ -172,15 +178,15 @@ function GiveLoadout(player, count)
 		local remaining_ammo
 
 		if(GetGlobalBool( "GG_INVERT_WEAPON_LIST" )) then
-			if(weapons.GetStored( wp ) == nil and GG_USE_M9K) then
+			if(weapons.GetStored( wp ) == nil and GG_USE_TFA) then
 				remaining_ammo = GG_BACKUP_WEAPONS_LIST[20 - (count - 1)].ammo - weapon:Clip1()
 			else
 				remaining_ammo = GG_WEAPONS_LIST[20 - (count - 1)].ammo - weapon:Clip1()
 			end
 		else
-			if(weapons.GetStored( wp ) == nil and GG_USE_M9K) then
+			if(weapons.GetStored( wp ) == nil and GG_USE_TFA) then
 				remaining_ammo = GG_BACKUP_WEAPONS_LIST[count].ammo - weapon:Clip1()
-			else 
+			else
 				remaining_ammo = GG_WEAPONS_LIST[count].ammo - weapon:Clip1()
 			end
 		end
@@ -190,9 +196,9 @@ function GiveLoadout(player, count)
 	end
 
 	-- Give the knife
-	if(weapons.GetStored( GG_KNIFE ) == nil and GG_USE_M9K) then
+	if(weapons.GetStored( GG_KNIFE ) == nil and GG_USE_TFA) then
 		player:Give(GG_BACKUP_KNIFE)
-		print("[Call of Duty - Gun Game] Weapon '" .. GG_KNIFE .. "' missing!")
+		MsgC( Color( 255, 10, 10 ), "[Call of Duty - Gun Game] Weapon '" .. GG_KNIFE .. "' missing!")
 	else
 		player:Give(GG_KNIFE)
 	end
@@ -211,14 +217,14 @@ function getCurrentWeapon(count)
 		wp = GG_WEAPONS_LIST[20 - (count - 1)].weapon
 
 		if(weapons.GetStored( wp ) == nil) then
-			print("[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
+			MsgC( Color( 255, 10, 10 ), "[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
 			wp = GG_BACKUP_WEAPONS_LIST[20 - (count - 1)].weapon
 		end
 	else
 		wp = GG_WEAPONS_LIST[count].weapon
 
-		if(weapons.GetStored( wp ) == nil and GG_USE_M9K) then
-			print("[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
+		if(weapons.GetStored( wp ) == nil and GG_USE_TFA) then
+			MsgC( Color( 255, 10, 10 ), "[Call of Duty - Gun Game] Weapon '" .. wp .. "' missing, using backup weapon!")
 			wp = GG_BACKUP_WEAPONS_LIST[count].weapon
 		end
 	end

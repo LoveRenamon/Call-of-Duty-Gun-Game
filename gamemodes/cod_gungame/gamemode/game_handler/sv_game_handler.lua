@@ -11,8 +11,8 @@ net.Receive("Start_Game", function()
 	local verified = false
 
 	for _, ply in ipairs(player.GetAll()) do
-		if(ply:GetName() == data[4]) then 
-			verified = true 
+		if(ply:GetName() == data[4]) then
+			verified = true
 		end
 	end
 
@@ -22,12 +22,12 @@ net.Receive("Start_Game", function()
 		SetGlobalBool( "GG_INVERT_WEAPON_LIST", data[3])
 
 		SetGlobalInt( "GG_GAME_STATUS" , 2 )
-		SetGlobalInt( "GG_CURRENT_ROUND" , 1 ) 
+		SetGlobalInt( "GG_CURRENT_ROUND" , 1 )
 		closeLobby()
 
 		startGame()
 	else
-		print("[CoD - Gun Game] Security risk! Player '" .. data[4] .. "' tried to bypass the admin check and start the game!")
+		MsgC( Color( 255, 10, 10 ), "[CoD - Gun Game] Security risk! Player '" .. data[4] .. "' tried to bypass the admin check and start the game!")
 	end
 
 end)
@@ -100,7 +100,7 @@ end
 function updateTimer()
 
 	SetGlobalInt( "GG_MATCH_START_TIMER" , match_timer )
-	
+
 	if(match_timer == 0) then
 		timer.Destroy("CountDownTimer")
 
@@ -126,7 +126,7 @@ end
 function updateScoreTimer()
 
 	SetGlobalInt( "GG_ROUND_END_TIMER", round_timer )
-	
+
 	if(round_timer == 0) then
 		timer.Destroy("CountDownTimerScore")
 
@@ -142,7 +142,7 @@ end
 -- Update round timer
 function endRoundTimer()
 
-	SetGlobalInt( "GG_GAME_STATUS" , 3 ) 
+	SetGlobalInt( "GG_GAME_STATUS" , 3 )
 
 	timer.Create("CountDownTimerScore", 1, 0, updateScoreTimer)
 

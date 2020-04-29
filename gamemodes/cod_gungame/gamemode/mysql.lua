@@ -1,3 +1,31 @@
+--[[
+For server owners who like to display game stats on their website / join screen, I added MySQL support. Certain game and player stats like wins, kills and deaths will be stored when this setting is enabled and configured properly.
+
+>> Installation of the MySQL modules
+Because Gmod doesn't have a MySQL driver installed by default, you have to install it yourself.
+The required modules you need to install are `tmysql4` and `libmysql/libmysqlclient`.
+
+>>> tmysql4
+* Windows: https://github.com/bkacjios/gm_tmysql4/releases/download/R1/gmsv_tmysql4_win32.dll
+* Linux: https://github.com/bkacjios/gm_tmysql4/releases/download/R1.01/gmsv_tmysql4_linux.dll
+
+Copy the file to "path/to/server/garrysmod/lua/bin/". If the bin folder doesn't exist, go ahead and create one.
+
+>>> libmysql/libmysqlclient
+* Windows: https://github.com/syl0r/MySQLOO/raw/master/MySQL/lib/windows/libmysql.dll
+* Linux: https://github.com/syl0r/MySQLOO/raw/master/MySQL/lib/linux/libmysqlclient.so.18
+
+Copy the file to "path/to/server/". This is the folder that contains `srcds.exe` or `srcds_run`.
+
+>> Database table
+When you run the gamemode for the first time, it will automatically create the table `gmod_gungame` in your database.
+The table will have the following columns:
+
+```id, username, steam_id, rounds_played, rounds_won, rounds_lost, rounds_tied, total_kills, total_deaths, last_played```
+
+`id` is the primary key, `username` is the unique key.
+--]]
+
 if(GG_USE_MYSQL) then
     require("tmysql4")
 
@@ -22,10 +50,10 @@ if(GG_USE_MYSQL) then
 
     -- Update score function
     function updateScoreDatabase( player, steam_id, kills, deaths, status )
-        
+
         local game_status
 
-        if(status == 0) then 
+        if(status == 0) then
             game_status = "rounds_won"
         elseif(status == 1) then
             game_status = "rounds_lost"

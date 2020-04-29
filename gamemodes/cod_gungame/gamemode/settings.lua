@@ -1,79 +1,12 @@
---[[-------------------------------------------------------------------------
-Enable or disable the usage of the M9K weapon packs.
-
-To use this, make sure that the server has installed all of the required addons.
-Players also need to download the addons, but as a dedicated server owner I
-expect you to know how this works.
-
-Required addon IDs:
-- 144982052
-- 128089118
-- 128091208
-- 128093075
-
-NOTE: If you disable this, the weapons in the pre-made weapon list won't work!
----------------------------------------------------------------------------]]
-GG_USE_M9K = false
-
---[[-------------------------------------------------------------------------
-Enable or disable the usage of MW2 playermodels.
-
-To use this, make sure that the server has installed the required addon.
-Players also need to download the addon, but as a dedicated server owner I
-expect you to know how this works.
-
-Required addon ID:
-- 500247187
-
-NOTE: If you disable this, the skins in the pre-made skins list won't work!
----------------------------------------------------------------------------]]
-GG_USE_MW2_SKINS = false
-
---[[-------------------------------------------------------------------------
-Enable or disable the usage of MW2 playermodels.
-
-To use this, make sure that the server has installed the required addon.
-Players also need to download the addon, but as a dedicated server owner I
-expect you to know how this works.
-
-Required addon ID:
-- 500247187
-
-NOTE: If you disable this, the skins in the pre-made skins list won't work!
----------------------------------------------------------------------------]]
+---------------------------------------------------------------------------
+-- Enable / disable the usage of the TFA weapon list.
 GG_USE_TFA = true
 
---[[-------------------------------------------------------------------------
-This is the list with weapons used during the game. You can edit the list if
-you want to use different weapons. Keep in mind that the all slots have to
-be filled and that you can't have more than 20 weapons in the list.
-
-Note: If somehow the weapons in the list below don't work, the back-up
-weapons list will be used instead.
 ---------------------------------------------------------------------------
-GG_WEAPONS_LIST = {
-	{ weapon = "m9k_coltpython", ammo = 30 }, -- Colt Python
-	{ weapon = "m9k_sig_p229r", ammo = 30 }, -- SIG P229R
-	{ weapon = "m9k_glock", ammo = 64 }, -- Glock 18
-	{ weapon = "m9k_mp9", ammo = 60 }, -- MP9
-	{ weapon = "m9k_mp5", ammo = 60 }, -- MP5
-	{ weapon = "m9k_smgp90", ammo = 100 }, -- P90
-	{ weapon = "m9k_mp7", ammo = 60 }, -- MP7
-	{ weapon = "m9k_ak47", ammo = 60 }, -- AK47
-	{ weapon = "m9k_scar", ammo = 60 }, -- SCAR
-	{ weapon = "m9k_auga3", ammo = 60 }, -- AUG A3
-	{ weapon = "m9k_pkm", ammo = 150 }, -- PKM
-	{ weapon = "m9k_m249lmg", ammo = 150 }, -- M249
-	{ weapon = "m9k_ithacam37", ammo = 30 }, -- Ithacam 37
-	{ weapon = "m9k_m3", ammo = 30 }, -- M3
-	{ weapon = "m9k_1887winchester", ammo = 12 }, -- 1887 Winchester
-	{ weapon = "m9k_m14sp", ammo = 40 }, -- M14
-	{ weapon = "m9k_m98b", ammo = 60 }, -- M98B
-	{ weapon = "m9k_aw50", ammo = 60 }, -- AW50
-	{ weapon = "m9k_m79gl", ammo = 2 }, -- M79GL
-	{ weapon = "m9k_rpg7", ammo = 1 }, -- RPG7
-}
---]]
+-- Enable / disable the usage of custom playermodels.
+GG_USE_PLAYERMODELS = false
+
+---------------------------------------------------------------------------
 GG_WEAPONS_LIST = {
 	{ weapon = "tfa_ava_trigun", ammo = 30 }, -- Bombshell Tri-Revolver
 	{ weapon = "tfa_l4d2_vp70", ammo = 30 }, -- VP70
@@ -88,7 +21,6 @@ GG_WEAPONS_LIST = {
 	{ weapon = "tfa_l4d2_calico", ammo = 150 }, -- M950
 	{ weapon = "tfa_l4d2_m240b", ammo = 100 }, -- M240B
 	{ weapon = "tfa_kzsf_vc30", ammo = 30 }, -- VC30
-	{ weapon = "tfa_kzsf_vc30", ammo = 30 }, -- AR15
 	{ weapon = "tfa_nmrih_1892", ammo = 12 }, -- Winchester 1892
 	{ weapon = "tfa_l4d2_rocky_ro2bar", ammo = 40 }, -- M1918
 	{ weapon = "tfa_l4d2_ctm200", ammo = 60 }, -- M200
@@ -99,8 +31,7 @@ GG_WEAPONS_LIST = {
 }
 
 --[[-------------------------------------------------------------------------
-This is the back-up weapons list that will be used during the game if somehow
-the above weapons list doesn't work.
+This is the back-up weapons list that will be used during the game if somehow the above weapons lists doesn't work. Leave this list untouched.
 ---------------------------------------------------------------------------]]
 GG_BACKUP_WEAPONS_LIST = {
 	{ weapon = "weapon_357", ammo = 36 },
@@ -128,47 +59,26 @@ GG_BACKUP_WEAPONS_LIST = {
 --[[-------------------------------------------------------------------------
 This is the secondary weapon which should be a melee weapon of some sort.
 
-Note: If somehow the melee weapon down below doesn't work, the back-up melee
-weapon will be used instead.
----------------------------------------------------------------------------
-GG_KNIFE = "m9k_knife"
-GG_KNIFE_THROW = "m9k_thrown_spec_knife"
---]]
-GG_KNIFE = "weapon_crowbar"
-GG_KNIFE_THROW = "weapon_crowbar"
+Note: If somehow the melee weapon down below doesn't work, the back-up melee weapon will be used instead.
+---------------------------------------------------------------------------]]
+GG_KNIFE = "weapon_fists"
+GG_KNIFE_THROW = "weapon_fists"
 
 --[[-------------------------------------------------------------------------
-This is the back-up melee weapon that will be used during the game if somehow
-the above melee weapon doesn't work.
+This is the back-up melee weapon that will be used during the game if somehow the above melee weapon doesn't work. Leave this list untouched.
 ---------------------------------------------------------------------------]]
 GG_BACKUP_KNIFE = "weapon_crowbar"
 GG_BACKUP_KNIFE_THROW = "weapon_crowbar"
 
 --[[-------------------------------------------------------------------------
-This is a list of skins that will be used during the game. You can add
-whatever skin you want here but make sure that every client has the skins
-installed, otherwise they'll only see errors.
+This is a list of custom playermodels that will be used during the game.
 ---------------------------------------------------------------------------]]
-GG_SKINS_LIST = {
-	"models/codmw2/codmw2.mdl",
-	"models/codmw2/codmw2h.mdl",
-	"models/codmw2/codmw2he.mdl",
-	"models/codmw2/codmw2hexe.mdl",
-	"models/codmw2/codmw2m.mdl",
-	"models/codmw2/t_codm.mdl",
-	"models/codmw2/t_codmw2.mdl",
-	"models/codmw2/t_codmw2h.mdl",
-	"models/mw2guy/rus/gassoldier.mdl",
-	"models/mw2guy/rus/soldier_a.mdl",
-	"models/mw2guy/rus/soldier_c.mdl",
-	"models/mw2guy/rus/soldier_d.mdl",
-	"models/mw2guy/rus/soldier_e.mdl",
-	"models/mw2guy/rus/soldier_f.mdl",
+GG_PLAYERMODEL_LIST = {
+	"models/debiddo/kyuukimon/kyuukimon_pm.mdl"
 }
 
 --[[-------------------------------------------------------------------------
-This is a list of skins that will be used during the game if somehow the
-skins in the list above don't work. Leave this list untouched!
+This is a list of playermodels that will be used during the game if somehow the playermodels in the list above don't work. Leave this list untouched.
 ---------------------------------------------------------------------------]]
 GG_BACKUP_SKINS_LIST = {
 	"models/player/urban.mdl",
@@ -192,22 +102,16 @@ The default amount of rounds a match has. You can also edit this in-game.
 GG_AMOUNT_OF_ROUNDS_PER_MATCH = 5
 
 --[[-------------------------------------------------------------------------
-This is a list of usernames who can edit the game settings and start the
-match. If you leave the list empty, every player can start the match.
+This is a list of usernames who can edit the game settings and start the match. If you leave the list empty, every player can start the match.
 
-Note: If a player has admin rights but is not present in this list, he/she
-can still start and control the game.
+Note: If a player has admin rights but is not present in this list, he/she can still start and control the game.
 
-Example: GG_ALLOWED_PLAYERS = {
-	"poepjejan1",
-	"bluedragon102"
-}
+Example: GG_ALLOWED_PLAYERS = { "poepjejan1", "bluedragon102" }
 ---------------------------------------------------------------------------]]
 GG_ALLOWED_PLAYERS = {}
 
 --[[-------------------------------------------------------------------------
-MySQL Support. If enabled, certain game stats will be stored which can be
-used later on by for example, a dashboard on a website.
+MySQL Support. If enabled, certain game stats will be stored which can be used later on by for example, a dashboard on a website.
 
 Requirements to get this feature working:
 
@@ -225,8 +129,7 @@ Requirements to get this feature working:
 	Install in "path/to/server/".
 	(in the folder that contains srcds.exe or srcds_run)
 
-Note: no pre-made website dashboard will be provided. You need to have
-programming knowledge to develop your own.
+Note: no pre-made website dashboard will be provided. You need to have programming knowledge to develop your own.
 ---------------------------------------------------------------------------]]
 GG_USE_MYSQL = false
 GG_MYSQL_HOST = "localhost"
@@ -236,6 +139,6 @@ GG_MYSQL_DATABASE = "database"
 GG_MYSQL_POST = 3306
 
 --[[-------------------------------------------------------------------------
-KEEP THIS DISABLED ON REAL SERVERS - FOR DEBUGGING ONLY!
+keep this disabled on real servers - for debugging only.
 ---------------------------------------------------------------------------]]
-GG_DEBUG = false
+GG_DEBUG = true
